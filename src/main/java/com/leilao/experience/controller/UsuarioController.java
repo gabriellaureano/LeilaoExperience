@@ -3,6 +3,7 @@ package com.leilao.experience.controller;
 import com.leilao.experience.dto.UsuarioRequest;
 import com.leilao.experience.dto.UsuarioResponse;
 import com.leilao.experience.service.UsuarioService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public UsuarioResponse criarUsuario(@RequestBody UsuarioRequest request){
+    public UsuarioResponse criarUsuario(@RequestBody @Valid UsuarioRequest request){
         return usuarioService.criarUsuario(request);
     }
 
@@ -31,7 +32,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public UsuarioResponse atualizarUsuarioId(@PathVariable Long id,@RequestBody UsuarioRequest request){
+    public UsuarioResponse atualizarUsuarioId(@PathVariable @Valid Long id, @RequestBody UsuarioRequest request){
         return usuarioService.atualizarUsuarioId(id, request);
     }
 

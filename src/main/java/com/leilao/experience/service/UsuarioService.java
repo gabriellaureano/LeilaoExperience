@@ -3,8 +3,11 @@ package com.leilao.experience.service;
 import com.leilao.experience.dto.UsuarioRequest;
 import com.leilao.experience.dto.UsuarioResponse;
 import com.leilao.experience.entity.Usuario;
+import com.leilao.experience.exception.UsuarioNaoEncontradoException;
 import com.leilao.experience.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,14 +35,14 @@ public class UsuarioService {
 
     public UsuarioResponse buscarUsuarioPorId(Long id){
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário Não Encontrado"));
 
         return UsuarioResponse.fromEntity(usuario);
     }
 
     public UsuarioResponse atualizarUsuarioId(Long id, UsuarioRequest request){
         Usuario usuarioExistente = usuarioRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Usuario não encontrado"));
+                .orElseThrow(()-> new UsuarioNaoEncontradoException("Usuário Não Encontrado"));
 
         usuarioExistente.setNome(request.nome());
         usuarioExistente.setEmail(request.email());
