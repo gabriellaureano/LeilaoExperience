@@ -3,6 +3,7 @@ package com.leilao.experience.service;
 import com.leilao.experience.dto.ProdutoRequest;
 import com.leilao.experience.dto.ProdutoResponse;
 import com.leilao.experience.dto.UsuarioResponse;
+import com.leilao.experience.entity.CondicaoProduto;
 import com.leilao.experience.entity.Produto;
 import com.leilao.experience.entity.Usuario;
 import com.leilao.experience.exception.ProdutoNaoEncontradoException;
@@ -30,7 +31,7 @@ public class ProdutoService {
         produto.setUsuario(usuario);
         produto.setNome(request.nome());
         produto.setDescricao(request.descricao());
-        produto.setCondicaoProduto(request.condicaoProduto());
+        produto.setCondicaoProduto(CondicaoProduto.valueOf(request.condicaoProduto()));
 
         Produto produtoSalvo = produtoRepository.save(produto);
 
@@ -58,7 +59,7 @@ public class ProdutoService {
         produtoExistente.setNome(produtoRequest.nome());
         produtoExistente.setUsuario(usuario);
         produtoExistente.setDescricao(produtoRequest.descricao());
-        produtoExistente.setCondicaoProduto(produtoRequest.condicaoProduto());
+        produtoExistente.setCondicaoProduto(CondicaoProduto.valueOf(produtoRequest.condicaoProduto()));
 
         Produto produtoAtualizado = produtoRepository.save(produtoExistente);
 
