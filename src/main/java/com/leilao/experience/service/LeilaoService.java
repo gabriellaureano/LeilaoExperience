@@ -2,9 +2,11 @@ package com.leilao.experience.service;
 
 import com.leilao.experience.dto.LeilaoRequest;
 import com.leilao.experience.dto.LeilaoResponse;
+import com.leilao.experience.dto.LeilaoUpdate;
 import com.leilao.experience.entity.Leilao;
 import com.leilao.experience.entity.Produto;
 import com.leilao.experience.entity.Usuario;
+import com.leilao.experience.exception.LeilaoNaoEncontradoException;
 import com.leilao.experience.exception.ProdutoNaoEncontradoException;
 import com.leilao.experience.exception.UsuarioNaoEncontradoException;
 import com.leilao.experience.repository.LeilaoRepository;
@@ -45,5 +47,17 @@ public class LeilaoService {
         return leilaoRepository.findAll().stream()
                 .map(LeilaoResponse::fromEntity)
                 .toList();
+    }
+
+    public LeilaoResponse atualizarLeilaoPorId(Long id, LeilaoUpdate update){
+        Leilao leilao = leilaoRepository.findById(id)
+                .orElseThrow(() -> new LeilaoNaoEncontradoException("Leilão Não Encontrado"));
+
+        leilao.setMaiorLanceAtual(update.valorMaiorLance());
+        leilao.setUsuarioMaiorLanceId(update.usuarioMaiorLanceId());
+
+        Leilao leilaoSalvo = leilaoRepository.save(leilao);
+
+        return LeilaoResponse.fromEntity(leilaoSalvo);
     }
 }
