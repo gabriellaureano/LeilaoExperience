@@ -33,4 +33,9 @@ public class LeilaoController {
     public ResponseEntity<LeilaoResponse> atualizarLeilaoId(@PathVariable Long id, @RequestBody LeilaoUpdate update){
         return ResponseEntity.ok().body(leilaoService.atualizarLeilaoPorId(id, update));
     }
+
+    @PutMapping("/finalizar/{id}")
+    public ResponseEntity finalizarLeilao(@PathVariable Long id){
+        return ResponseEntity.ok().body(leilaoService.finalizarLeilaoId(id));
+    }
 }

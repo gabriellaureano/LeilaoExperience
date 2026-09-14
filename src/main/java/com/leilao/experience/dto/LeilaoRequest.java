@@ -10,7 +10,7 @@ public record LeilaoRequest(
         Long produtoId,
         @NotNull(message = "Id do usuario criador é obrigatorio.")
         Long usuarioCriadorId,
-        @NotBlank(message = "Lance inicial obrigatorio.")
+        @NotNull(message = "Lance inicial obrigatorio.")
         BigDecimal lanceInicial
 ) {
 }
