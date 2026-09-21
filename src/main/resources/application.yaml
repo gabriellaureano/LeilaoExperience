@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: experience
+
+  datasource:
+    url: jdbc:postgresql://localhost:5425/leilao_db
+    username: leilao
+    password: 123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
