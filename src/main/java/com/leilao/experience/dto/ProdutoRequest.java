@@ -1,16 +1,20 @@
 package com.leilao.experience.dto;
 
-import com.leilao.experience.entity.CondicaoProduto;
-import com.leilao.experience.entity.Produto;
-import com.leilao.experience.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 
 
 public record ProdutoRequest(
+        @NotBlank(message = "Nome é obrigatorio.")
         String nome,
+        @NotNull(message = "Id do Usuário é obrigatorio.")
         Long usuarioId,
         String descricao,
-        CondicaoProduto condicaoProduto
+        @NotBlank(message = "Condição do produto é obrigatoria.")
+        @Pattern(regexp = "^(NOVO|SEMINOVO|USADO)$",message = "Condição inválida. Os valores permitidos são: NOVO, SEMINOVO ou USADO")
+        String condicaoProduto
 ) {
 
 }

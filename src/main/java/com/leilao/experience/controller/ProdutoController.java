@@ -3,6 +3,7 @@ package com.leilao.experience.controller;
 import com.leilao.experience.dto.ProdutoRequest;
 import com.leilao.experience.dto.ProdutoResponse;
 import com.leilao.experience.service.ProdutoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class ProdutoController {
     private final ProdutoService produtoService;
 
     @PostMapping
-    public ResponseEntity<ProdutoResponse> criarProduto(@RequestBody ProdutoRequest request){
+    public ResponseEntity<ProdutoResponse> criarProduto(@RequestBody @Valid ProdutoRequest request){
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.criarProduto(request));
     }
 
@@ -28,7 +29,7 @@ public class ProdutoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProdutoResponse> atualizarPorId(@PathVariable Long id,@RequestBody ProdutoRequest request){
+    public ResponseEntity<ProdutoResponse> atualizarPorId(@PathVariable Long id,@RequestBody @Valid ProdutoRequest request){
         return ResponseEntity.status(HttpStatus.OK).body(produtoService.atualizarProdutoPorId(id, request));
     }
 
