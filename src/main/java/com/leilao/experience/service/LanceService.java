@@ -6,7 +6,6 @@ import com.leilao.experience.dto.LeilaoUpdate;
 import com.leilao.experience.entity.Lance;
 import com.leilao.experience.entity.Leilao;
 import com.leilao.experience.entity.Usuario;
-import com.leilao.experience.exception.ErroResponse;
 import com.leilao.experience.exception.LanceInvalidoException;
 import com.leilao.experience.exception.LeilaoNaoEncontradoException;
 import com.leilao.experience.exception.UsuarioNaoEncontradoException;
@@ -66,7 +65,12 @@ public class LanceService {
             throw new LanceInvalidoException("Lance Invalido");
         }
 
+    }
 
+    public List<LanceResponse> buscarLancesPorUsuario(Long id){
+        return lanceRepository.findByUsuarioId(id).stream()
+                .map(LanceResponse::fromEntity)
+                .toList();
     }
 
     public List<LanceResponse> buscarLances(){

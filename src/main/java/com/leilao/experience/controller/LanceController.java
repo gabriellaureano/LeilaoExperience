@@ -29,5 +29,10 @@ public class LanceController {
         return ResponseEntity.ok().body(lanceService.buscarLances());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity buscarLancePorUsuario(@PathVariable Long id){
+        return ResponseEntity.ok().body(lanceService.buscarLancesPorUsuario(id));
+    }
+
 
 }
