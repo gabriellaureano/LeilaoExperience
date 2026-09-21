@@ -49,4 +49,27 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroResponse);
     }
 
+    @ExceptionHandler(LeilaoNaoEncontradoException.class)
+    public ResponseEntity leilaoNaoEncontrado(LeilaoNaoEncontradoException erro){
+        ErroResponse erroResponse = new ErroResponse(
+                "Leilão Não Encontrado",
+                HttpStatus.NOT_FOUND.value(),
+                List.of(erro.getMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erroResponse);
+    }
+
+    @ExceptionHandler(LanceInvalidoException.class)
+    public ResponseEntity lanceInvalido(LanceInvalidoException erro){
+        ErroResponse erroResponse = new ErroResponse(
+                "Realize Um Lance Com Valor Maior Que O Atual.",
+                HttpStatus.BAD_REQUEST.value(),
+                List.of(erro.getMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroResponse);
+    }
+
+
 }
