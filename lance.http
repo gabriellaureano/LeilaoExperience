@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:8080
+
+### Realizar um lance
+POST {{baseUrl}}/leilao/lance
+Content-Type: application/json
+
+{
+  "usuarioId": 2,
+  "leilaoId": 1,
+  "valor": 25000.00
+}
+
+### Listar todos os lances
+GET {{baseUrl}}/leilao/lance
+
+### Buscar lances por ID do usuário
+GET {{baseUrl}}/leilao/lance/4

@@ -1,0 +1,30 @@
+@baseUrl = http://localhost:8080
+
+### Listar todos os usuários
+GET {{baseUrl}}/leilao/usuario
+
+### Criar novo usuário
+POST {{baseUrl}}/leilao/usuario
+Content-Type: application/json
+
+{
+  "nome": "Calleri",
+  "email": "calleri@gmail.com",
+  "senha": "senhaSegura123"
+}
+
+### Buscar usuário por ID
+GET {{baseUrl}}/leilao/usuario/1
+
+### Atualizar usuário por ID
+PUT {{baseUrl}}/leilao/usuario/6
+Content-Type: application/json
+
+{
+  "nome": "Calleri Alterado",
+  "email": "Calleri.alterado@gmail.com",
+  "senha": "novaSenha456"
+}
+
+### Deletar usuário por ID
+DELETE {{baseUrl}}/leilao/usuario/1

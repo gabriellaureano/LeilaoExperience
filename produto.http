@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:8080
+
+### Criar novo produto
+POST {{baseUrl}}/leilao/produto
+Content-Type: application/json
+
+{
+  "nome": "PlayStation 5",
+  "descricao": "Console em perfeito estado com 2 controles",
+  "condicaoProduto": "USADO",
+  "usuarioId": 1
+}
+
+### Listar todos os produtos
+GET {{baseUrl}}/leilao/produto
+
+### Buscar produto por ID
+GET {{baseUrl}}/leilao/produto/1
+
+### Atualizar produto por ID
+PUT {{baseUrl}}/leilao/produto/1
+Content-Type: application/json
+
+{
+  "nome": "PlayStation 5 Pro",
+  "descricao": "Console na caixa lacrado com nota fiscal",
+  "condicaoProduto": "NOVO",
+  "usuarioId": 1
+}
+
+### Deletar produto por ID
+DELETE {{baseUrl}}/leilao/produto/5

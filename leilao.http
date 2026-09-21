@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:8080
+
+### Criar novo leilão
+POST {{baseUrl}}/leilao
+Content-Type: application/json
+
+{
+  "produtoId": 1,
+  "usuarioCriadorId": 1,
+  "lanceInicial": 5000.00
+}
+
+### Listar todos os leilões
+GET {{baseUrl}}/leilao
+
+### Finalizar leilão por ID
+PUT {{baseUrl}}/leilao/finalizar/1
+
+### Cancelar leilão por ID
+PUT {{baseUrl}}/leilao/cancelar/1
