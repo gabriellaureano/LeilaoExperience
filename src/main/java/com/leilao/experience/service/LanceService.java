@@ -5,8 +5,9 @@ import com.leilao.experience.dto.LanceResponse;
 import com.leilao.experience.dto.LeilaoUpdate;
 import com.leilao.experience.entity.Lance;
 import com.leilao.experience.entity.Leilao;
+import com.leilao.experience.entity.StatusLeilao;
 import com.leilao.experience.entity.Usuario;
-import com.leilao.experience.exception.LanceInvalidoException;
+import com.leilao.experience.exception.LeilaoEmAndamentoException;
 import com.leilao.experience.exception.LeilaoNaoEncontradoException;
 import com.leilao.experience.exception.UsuarioNaoEncontradoException;
 import com.leilao.experience.repository.LanceRepository;
@@ -35,7 +36,7 @@ public class LanceService {
         Leilao leilao = leilaoRepository.findById(request.leilaoId())
                 .orElseThrow(()-> new LeilaoNaoEncontradoException("Leilão Não Encontrado"));
 
-        if (request.valor().compareTo(leilao.getMaiorLanceAtual()) > 0){
+        if (request.valor().compareTo(leilao.getMaiorLanceAtual()) > 0 && leilao.getStatusLeilao() == StatusLeilao.EM_ANDAMENTO){
 
             Lance lance = new Lance();
             lance.setUsuario(usuario);
@@ -62,7 +63,7 @@ public class LanceService {
             return ResponseEntity.status(HttpStatus.CREATED).body(LanceResponse.fromEntity(lanceSalvo));
         }
         else{
-            throw new LanceInvalidoException("Lance Invalido");
+            throw new LeilaoEmAndamentoException("Verifique se o leilão está em andamento e se o valor é maior que o lance atual.");
         }
 
     }

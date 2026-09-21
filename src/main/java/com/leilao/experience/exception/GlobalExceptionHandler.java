@@ -63,7 +63,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(LanceInvalidoException.class)
     public ResponseEntity lanceInvalido(LanceInvalidoException erro){
         ErroResponse erroResponse = new ErroResponse(
-                "Realize Um Lance Com Valor Maior Que O Atual.",
+                "Realize um lance maior ou verifique se o leilao esta em andamento.",
+                HttpStatus.BAD_REQUEST.value(),
+                List.of(erro.getMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erroResponse);
+    }
+
+    @ExceptionHandler(LeilaoEmAndamentoException.class)
+    public ResponseEntity leilaoEmAndamento(LeilaoEmAndamentoException erro){
+        ErroResponse erroResponse = new ErroResponse(
+                "Verifique se o leilão esta em andamento para prosseguir.",
                 HttpStatus.BAD_REQUEST.value(),
                 List.of(erro.getMessage())
         );

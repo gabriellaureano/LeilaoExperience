@@ -8,6 +8,7 @@ import com.leilao.experience.entity.Leilao;
 import com.leilao.experience.entity.Produto;
 import com.leilao.experience.entity.StatusLeilao;
 import com.leilao.experience.entity.Usuario;
+import com.leilao.experience.exception.LeilaoEmAndamentoException;
 import com.leilao.experience.exception.LeilaoNaoEncontradoException;
 import com.leilao.experience.exception.ProdutoNaoEncontradoException;
 import com.leilao.experience.exception.UsuarioNaoEncontradoException;
@@ -70,19 +71,39 @@ public class LeilaoService {
         Usuario usuarioVencedor = usuarioRepository.findById(leilao.getUsuarioMaiorLanceId())
                 .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuario Não Encontrado"));
 
-        leilao.setStatusLeilao(StatusLeilao.FINALIZADO);
-        leilao.setVencedor(usuarioVencedor);
+        if (leilao.getStatusLeilao() == StatusLeilao.EM_ANDAMENTO){
+            leilao.setStatusLeilao(StatusLeilao.FINALIZADO);
+            leilao.setVencedor(usuarioVencedor);
 
-        Leilao leilaoSalvo = leilaoRepository.save(leilao);
+            Leilao leilaoSalvo = leilaoRepository.save(leilao);
 
-        return new LeilaoFinalizarResponse(
-                leilaoSalvo.getId(),
-                leilaoSalvo.getUsuarioMaiorLanceId(),
-                usuarioVencedor.getNome(),
-                leilaoSalvo.getProduto().getId(),
-                leilaoSalvo.getProduto().getNome(),
-                leilao.getMaiorLanceAtual(),
-                LocalDateTime.now()
-        );
+            return new LeilaoFinalizarResponse(
+                    leilaoSalvo.getId(),
+                    leilaoSalvo.getUsuarioMaiorLanceId(),
+                    usuarioVencedor.getNome(),
+                    leilaoSalvo.getProduto().getId(),
+                    leilaoSalvo.getProduto().getNome(),
+                    leilao.getMaiorLanceAtual(),
+                    LocalDateTime.now()
+            );
+        } else {
+            throw new LeilaoEmAndamentoException("Não é possivel finalizar um leilão que não esta em andamento.");
+        }
+
+    }
+
+    public LeilaoResponse cancelarLeilao(Long id){
+        Leilao leilao = leilaoRepository.findById(id)
+                .orElseThrow(() -> new LeilaoNaoEncontradoException("Leilão não encontrado"));
+
+        if (leilao.getStatusLeilao() == StatusLeilao.EM_ANDAMENTO){
+            leilao.setStatusLeilao(StatusLeilao.CANCELADO);
+
+            Leilao leilaoSalvo = leilaoRepository.save(leilao);
+
+            return LeilaoResponse.fromEntity(leilaoSalvo);
+        } else {
+            throw new LeilaoEmAndamentoException("Não é possivel cancelar um leilão que não está em andamento.");
+        }
     }
 }

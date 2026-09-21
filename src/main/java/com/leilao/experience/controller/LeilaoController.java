@@ -38,4 +38,9 @@ public class LeilaoController {
     public ResponseEntity finalizarLeilao(@PathVariable Long id){
         return ResponseEntity.ok().body(leilaoService.finalizarLeilaoId(id));
     }
+
+    @PutMapping("/cancelar/{id}")
+    public ResponseEntity cancelarLeilao(@PathVariable Long id){
+        return ResponseEntity.ok().body(leilaoService.cancelarLeilao(id));
+    }
 }
